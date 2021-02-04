@@ -21,8 +21,8 @@ node('master'){
     
     stage('Install Helm Chart'){
         sh """
-        az aks get-credentials --resource-group $resourceGroup --name $aks --admin
-        az aks update -n $aks -g $resourceGroup --attach-acr $acrname
+        az aks get-credentials --resource-group jenkinsHelm --name kubecluster3 --admin
+        az aks update -n kubecluster3 -g jenkinsHelm --attach-acr jenkinshelmacr
         helm install kuberhelm-${env.BUILD_NUMBER} helmjenkins
         """
     }
