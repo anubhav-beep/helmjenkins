@@ -4,6 +4,8 @@ node('master'){
     def resourceGroup = 'jenkinsHelm'
     def aks = 'jenkinscluster'
     
+    def acrname = 'jenkinshelmacr'
+    
     stage('SCM') {
         checkout scm
     }
