@@ -18,8 +18,9 @@ node('master'){
     }
     stage('Install Helm Chart'){
         sh """
+        az acr login --name jenkinshelmacr
         az aks get-credentials --resource-group $resourceGroup --name $aks
-        helm install kuberhelmm helmjenkins
+        helm install kuberhelm helmjenkins
         """
     }
 }
