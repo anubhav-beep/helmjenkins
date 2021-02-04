@@ -1,0 +1,12 @@
+node('master'){
+    
+    stage('SCM') {
+        checkout scm
+    }
+
+    stage('Install Helm Chart'){
+        sh """
+        helm install kuberhelm helmjenkins
+        """
+    }
+}
