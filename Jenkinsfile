@@ -21,15 +21,11 @@ node('master'){
         }
     }
     
-    stage('ACR Login') {
+    stage('Install Helm Chart'){
         withDockerRegistry([credentialsId: dockerCredentialId]) {
             sh """
             az acr login --name $acrname
             """
-        }
-    }
-    
-    stage('Install Helm Chart'){
         sh """
         az aks get-credentials --resource-group $resourceGroup --name $aks
         helm install kuberhelm-${env.BUILD_NUMBER} helmjenkins
