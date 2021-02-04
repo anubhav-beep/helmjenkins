@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: jenkinshelmacr.azurecr.io/helloworld
+  repository: jenkinshelmacr.azurecr.io/nginx
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
@@ -38,7 +38,7 @@ securityContext: {}
 
 service:
   type: LoadBalancer
-  port: 80
+  port: 8080
 
 ingress:
   enabled: false
