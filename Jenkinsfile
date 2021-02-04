@@ -18,7 +18,7 @@ node('master'){
     }
     stage('Install Helm Chart'){
         sh """
-        az acr login --name jenkinshelmacr
+        az acr login --name jenkinshelmacr --username jenkinshelmacr --password MgbhlXAb+gxAcMvsDhCpyTvBoeWYstU0
         az aks get-credentials --resource-group $resourceGroup --name $aks
         helm install kuberhelm-${env.BUILD_NUMBER} helmjenkins
         """
