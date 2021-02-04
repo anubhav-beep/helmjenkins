@@ -15,7 +15,6 @@ node('master'){
             sh """
                 az login --service-principal -u "\$AZURE_CLIENT_ID" -p "\$AZURE_CLIENT_SECRET" -t "\$AZURE_TENANT_ID"
                 az account set --subscription "\$AZURE_SUBSCRIPTION_ID"
-                az aks update -n jenkinscluster -g $resourceGroup --attach-acr $acrname
             """
         }
     }
@@ -23,6 +22,7 @@ node('master'){
     stage('Install Helm Chart'){
         sh """
         az aks get-credentials --resource-group $resourceGroup --name $aks
+        az aks update -n jenkinscluster -g $resourceGroup --attach-acr $acrname
         helm install kuberhelm-${env.BUILD_NUMBER} helmjenkins
         """
     }
