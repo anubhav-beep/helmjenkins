@@ -2,7 +2,7 @@ node('master'){
     
     def servicePrincipalId = 'azureserviceprincipal'
     def resourceGroup = 'jenkinsHelm'
-    def aks = 'kubecluster3'
+    def aks = 'cluster004'
     
     def acrname = 'jenkinshelmacr'
     
@@ -21,8 +21,8 @@ node('master'){
     
     stage('Install Helm Chart'){
         sh """
-        az aks get-credentials --resource-group jenkinsHelm --name kubecluster3 --admin
-        az aks update -n kubecluster3 -g jenkinsHelm --attach-acr jenkinshelmacr
+        az aks get-credentials --resource-group jenkinsHelm --name $aks --admin
+        az aks update -n $aks -g jenkinsHelm --attach-acr $acrname
         helm install kuberhelm-${env.BUILD_NUMBER} helmjenkins
         """
     }
