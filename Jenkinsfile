@@ -4,6 +4,10 @@ node('master'){
     def resourceGroup = 'jenkinsHelm'
     def aks = 'jenkinscluster'
     
+    def acrname = 'jenkinshelmacr'
+    
+    def dockerCredentialId = 'credentialsACR'
+    
     stage('SCM') {
         checkout scm
     }
@@ -16,9 +20,17 @@ node('master'){
             """
         }
     }
+    
+    stage('ACR Login') {
+        withDockerRegistry([credentialsId: dockerCredentialId]) {
+            sh """
+            az acr login --name $acrname
+            """
+        }
+    }
+    
     stage('Install Helm Chart'){
         sh """
-        az acr login --name jenkinshelmacr --username jenkinshelmacr --password MgbhlXAb+gxAcMvsDhCpyTvBoeWYstU0
         az aks get-credentials --resource-group $resourceGroup --name $aks
         helm install kuberhelm-${env.BUILD_NUMBER} helmjenkins
         """
