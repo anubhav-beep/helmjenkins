@@ -4,10 +4,6 @@ node('master'){
     def resourceGroup = 'jenkinsHelm'
     def aks = 'jenkinscluster'
     
-    def acrname = 'jenkinshelmacr'
-    
-    def dockerCredentialId = 'credentialsACR'
-    
     stage('SCM') {
         checkout scm
     }
@@ -23,6 +19,7 @@ node('master'){
     
     stage('Install Helm Chart'){
         sh """
+        az aks update -n jenkinscluster -g $resourceGroup --attach-acr $acrname
         az aks get-credentials --resource-group $resourceGroup --name $aks
         helm install kuberhelm-${env.BUILD_NUMBER} helmjenkins
         """
