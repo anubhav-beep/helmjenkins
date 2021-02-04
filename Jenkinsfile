@@ -18,6 +18,7 @@ node('master'){
     }
     stage('Install Helm Chart'){
         sh """
+        az aks get-credentials --resource-group $resourceGroup --name $aks
         helm install kuberhelm helmjenkins
         """
     }
