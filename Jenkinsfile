@@ -20,7 +20,7 @@ node('master'){
         sh """
         az acr login --name jenkinshelmacr
         az aks get-credentials --resource-group $resourceGroup --name $aks
-        helm install kuberhelm helmjenkins
+        helm install kuberhelm-${env.BUILD_NUMBER} helmjenkins
         """
     }
 }
